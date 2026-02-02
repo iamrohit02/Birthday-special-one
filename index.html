@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Special One ❤️</title>
+    <style>
+        /* CSS অংশ */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: white;
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://i.ibb.co/B5H42n08/images.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* হোম স্ক্রিন */
+        #home-screen {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 15px;
+            width: 95%;
+            max-width: 500px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 60px 10px;
+            border-radius: 25px;
+            text-align: center;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* টপ বার */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            z-index: 10;
+        }
+
+        button {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        /* বার্থডে সেকশন - বড় কেক */
+        .content { text-align: center; }
+
+        .cake-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .cake { 
+            font-size: 110px; 
+            display: inline-block;
+            animation: bounceAnim 2.5s ease-in-out infinite; 
+            filter: drop-shadow(0 0 15px rgba(255, 192, 203, 0.4));
+        }
+
+        /* নোট সেকশন - একটি বড় ফুল */
+        .flower-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .big-flower {
+            font-size: 110px; /* ফুলটি অনেক বড় করা হয়েছে */
+            display: inline-block;
+            animation: bounceAnim 2.5s ease-in-out infinite; /* কেকের মতো একই বাউন্স */
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.4));
+        }
+
+        /* কমন বাউন্স এনিমেশন (কেক ও ফুল উভয়ের জন্য) */
+        @keyframes bounceAnim { 
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); } 
+            50% { transform: translateY(-30px) scale(1.1) rotate(5deg); } 
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 25px;
+            padding-bottom: 50px;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* লেটার বক্স ডিজাইন */
+        .letter-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .long-message {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #fff;
+            font-style: italic;
+            text-align: justify;
+            margin-bottom: 30px;
+        }
+
+        .note-footer-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .note-footer-images img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ১. হোম স্ক্রিন -->
+    <div id="home-screen" class="screen active">
+        <div class="nav-container">
+            <div class="glass-card" onclick="showSection('note-section')">
+                <h2>NOTE</h2>
+            </div>
+            <div class="glass-card" onclick="showSection('birthday-section')">
+                <h2>BIRTHDAY</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- ২. বার্থডে সেকশন (বড় কেক) -->
+    <div id="birthday-section" class="screen" style="overflow-y: auto;">
+        <div class="top-bar">
+            <button onclick="goBack()">← BACK</button>
+            <button id="music-btn" onclick="toggleMusic()">PLAY MUSIC 🎵</button>
+        </div>
+        <div class="content">
+            <h1 style="font-weight: 300; letter-spacing: 3px;">HAPPY BIRTHDAY!</h1>
+            
+            <div class="cake-wrapper">
+                <div class="cake">🎂</div>
+            </div>
+
+            <div class="image-grid">
+                <img src="https://i.ibb.co/rf6QVcZC/images-1.jpg" alt="1">
+                <img src="https://i.ibb.co/q3m3w2pH/images-2.jpg" alt="2">
+                <img src="https://i.ibb.co/GDBrZ2r/images-3.jpg" alt="3">
+                <img src="https://i.ibb.co/JwrskKFq/images-4.jpg" alt="4">
+                <img src="https://i.ibb.co/pj6v4g9W/images-5.jpg" alt="5">
+                <img src="https://i.ibb.co/WvvCHzp2/images.jpg" alt="6">
+            </div>
+        </div>
+    </div>
+
+    <!-- ৩. নোট সেকশন (বড় একটি ফুল) -->
+    <div id="note-section" class="screen" style="overflow-y: auto;">
+        <div class="top-bar">
+            <button onclick="goBack()">← BACK</button>
+        </div>
+        <div class="letter-box">
+            
+            <!-- এখানে একটি বড় ফুল এবং বাউন্স এনিমেশন -->
+            <div class="flower-wrapper">
+                <div class="big-flower">🌸</div>
+            </div>
+
+            <div class="long-message">
+                <p>প্রিয়,</p>
+                <p>
+                    আজকের এই বিশেষ দিনটিতে আমি শুধু এটাই বলতে চাই যে, আমার জীবনে তোমার উপস্থিতি কোনো আশীর্বাদের চেয়ে কম নয়। পৃথিবীটা অনেক বড়, কিন্তু তোমার হাসিতেই আমি আমার সবচেয়ে বড় সুখ খুঁজে পাই। 
+                </p>
+                <p>
+                    জীবন হয়তো সবসময় সহজ হবে না, কিন্তু আমি জানি আমাদের এই একসাথে চলা প্রতিটা কঠিন পথকেও সুন্দর করে তুলবে। তোমার জন্মদিনে আমার শুধু একটাই প্রার্থনা—তুমি যেন সবসময় এভাবেই হাসিখুশি থেকো। তোমার স্বপ্নগুলো যেন ডানা মেলে আকাশ ছোঁয়।
+                </p>
+                <p>
+                    আমাদের কাটানো প্রতিটা মুহূর্ত আমার কাছে সেরা উপহার। তোমার পাশে থাকা, তোমার হাত ধরে চলা আর তোমার ওই পাগলামিগুলোই আমার দিনগুলোকে রঙিন করে দেয়। সবসময় আমার পাশে থেকো, ঠিক এভাবেই। 
+                </p>
+                <p style="text-align: center; font-weight: bold; margin-top: 20px;">
+                    "So many flowers, but my favourite one is you..." ❤️
+                </p>
+            </div>
+
+            <div class="note-footer-images">
+                <img src="https://i.ibb.co/rf6QVcZC/images-1.jpg" alt="Special 1">
+                <img src="https://i.ibb.co/pj6v4g9W/images-5.jpg" alt="Special 2">
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.6);">With lots of love ❤️</p>
+        </div>
+    </div>
+
+    <!-- পিয়ানো মিউজিক -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_180873748b.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let music = document.getElementById('bg-music');
+        let btn = document.getElementById('music-btn');
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0,0);
+            
+            if (music.paused) {
+                music.play().catch(e => console.log("Auto-play blocked"));
+                btn.innerText = "PAUSE MUSIC 🎵";
+            }
+        }
+
+        function goBack() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('home-screen').classList.add('active');
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                btn.innerText = "PAUSE MUSIC 🎵";
+            } else {
+                music.pause();
+                btn.innerText = "PLAY MUSIC 🎵";
+            }
+        }
+    </script>
+</body>
+</html>
